@@ -15,11 +15,7 @@ calories.head()
 
 exercise_data = pd.read_csv('exercise.csv')
 
-exercise_data.head()
-
 calories_data = pd.concat([exercise_data, calories['Calories']], axis=1)
-
-calories_data.head()
 
 # checking for missing values
 calories_data.isnull().sum()
@@ -42,6 +38,7 @@ print("\nDistribution plot for Age, Height, and Weight:\n")
 plt.figure(figsize=(10, 6))
 sns.displot(calories_data['Age'], label='Age', color='purple')
 sns.displot(calories_data['Height'], label='Height', color='blue')
+plt.show()
 sns.displot(calories_data['Weight'], label='Weight', color='green')
 plt.legend()
 plt.show()
@@ -124,3 +121,15 @@ print("\n### Model Evaluation ###")
 print("Mean Absolute Error for Decision Tree Regressor: {:.2f} calories".format(mae1))
 print("Mean Absolute Error for Random Forest: {:.2f} calories".format(mae2))
 print("Mean Absolute Error for XGBoost Regressor: {:.2f} calories".format(mae3))
+
+# Visualizing MAE for the Models
+models = ['Decision Tree', 'Random Forest', 'XGBoost']
+mae_values = [mae1, mae2, mae3]
+
+plt.figure(figsize=(8, 6))
+plt.bar(models, mae_values, color=['skyblue', 'orange', 'green'])
+plt.xlabel('Models')
+plt.ylabel('Mean Absolute Error (MAE)')
+plt.title('Mean Absolute Error for Each Model')
+plt.ylim(0, max(mae_values) + 2)  # Set the y-axis limit for better visualization
+plt.show()
