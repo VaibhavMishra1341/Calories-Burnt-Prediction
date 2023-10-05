@@ -5,6 +5,8 @@ from sklearn.model_selection import train_test_split
 from xgboost import XGBRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.tree import DecisionTreeRegressor
+from sklearn.svm import SVR
+from sklearn.linear_model import LinearRegression
 from sklearn import metrics
 
 # loading the data from csv file to a Pandas DataFrame
@@ -37,6 +39,7 @@ print("\nStatistical measures:\n", calories_data.describe())
 print("\nDistribution plot for Age, Height, and Weight:\n")
 plt.figure(figsize=(10, 6))
 sns.displot(calories_data['Age'], label='Age', color='purple')
+plt.show()
 sns.displot(calories_data['Height'], label='Height', color='blue')
 plt.show()
 sns.displot(calories_data['Weight'], label='Weight', color='green')
@@ -94,42 +97,80 @@ model2.fit(X_train, Y_train)
 model3 = XGBRegressor()
 model3.fit(X_train, Y_train)
 
-# Evaluation
+# Support Vector Regressor
+model4 = SVR()
+model4.fit(X_train, Y_train)
+
+# Linear Regression
+model5 = LinearRegression()
+model5.fit(X_train, Y_train)
+
+# Evaluating the Models with Percent Accuracy
+mean_actual_value = Y_test.mean()
 
 # Prediction on Test Data
-
 
 # Decision Tree Regressor
 test_data_prediction1 = model1.predict(X_test)
 mae1 = metrics.mean_absolute_error(Y_test, test_data_prediction1)
-# print("Mean Absolute Error for Decision Tree Regressor = ", mae1)
-
+accuracy1 = 100 - (mae1 / mean_actual_value) * 100
 
 # Random Forest Regressor
 test_data_prediction2 = model2.predict(X_test)
 mae2 = metrics.mean_absolute_error(Y_test, test_data_prediction2)
-# print("Mean Absolute Error for Random Forest = ", mae2)
-
+accuracy2 = 100 - (mae2 / mean_actual_value) * 100
 
 # XGBoost Regressor
 test_data_prediction3 = model3.predict(X_test)
 mae3 = metrics.mean_absolute_error(Y_test, test_data_prediction3)
-# print("Mean Absolute Error for XGBoost Regressor = ", mae3)
+accuracy3 = 100 - (mae3 / mean_actual_value) * 100
 
-# Evaluating the Models
-print("\n### Model Evaluation ###")
+# Support Vector Regressor
+test_data_prediction4 = model4.predict(X_test)
+mae4 = metrics.mean_absolute_error(Y_test, test_data_prediction4)
+accuracy4 = 100 - (mae4 / mean_actual_value) * 100
+
+# Linear Regression
+test_data_prediction5 = model5.predict(X_test)
+mae5 = metrics.mean_absolute_error(Y_test, test_data_prediction5)
+accuracy5 = 100 - (mae5 / mean_actual_value) * 100
+
+# Evaluating the Models with Percent Accuracy
+print("\n### Model Evaluation with Percent Accuracy ###\n")
+print("\nMean Absolute Error for Support Vector Regressor: {:.2f} calories".format(mae4))
+print("Accuracy for Support Vector Regressor: {:.2f}%".format(accuracy4))
+
+print("\nMean Absolute Error for Linear Regression: {:.2f} calories".format(mae5))
+print("Accuracy for Linear Regression: {:.2f}%".format(accuracy5))
+
 print("Mean Absolute Error for Decision Tree Regressor: {:.2f} calories".format(mae1))
-print("Mean Absolute Error for Random Forest: {:.2f} calories".format(mae2))
-print("Mean Absolute Error for XGBoost Regressor: {:.2f} calories".format(mae3))
+print("Accuracy for Decision Tree Regressor: {:.2f}%".format(accuracy1))
 
-# Visualizing MAE for the Models
-models = ['Decision Tree', 'Random Forest', 'XGBoost']
-mae_values = [mae1, mae2, mae3]
+print("\nMean Absolute Error for Random Forest: {:.2f} calories".format(mae2))
+print("Accuracy for Random Forest: {:.2f}%".format(accuracy2))
 
-plt.figure(figsize=(8, 6))
-plt.bar(models, mae_values, color=['skyblue', 'orange', 'green'])
-plt.xlabel('Models')
-plt.ylabel('Mean Absolute Error (MAE)')
-plt.title('Mean Absolute Error for Each Model')
-plt.ylim(0, max(mae_values) + 2)  # Set the y-axis limit for better visualization
+print("\nMean Absolute Error for XGBoost Regressor: {:.2f} calories".format(mae3))
+print("Accuracy for XGBoost Regressor: {:.2f}%".format(accuracy3))
+
+
+# Visualizing MAE and Percent Accuracy for the Models
+models = ['SVR', 'Linear Regression', 'Decision Tree', 'Random Forest', 'XGBoost']
+mae_values = [mae4, mae5, mae1, mae2, mae3]
+accuracy_values = [accuracy4, accuracy5, accuracy1, accuracy2, accuracy3]
+
+fig, ax1 = plt.subplots(figsize=(10, 6))
+
+ax1.bar(models, mae_values, color='skyblue', label='Mean Absolute Error (MAE)')
+ax1.set_xlabel('Models')
+ax1.set_ylabel('Mean Absolute Error (MAE)')
+ax1.set_ylim(0, max(mae_values) + 5)
+ax1.legend(loc='upper left')
+
+ax2 = ax1.twinx()
+ax2.plot(models, accuracy_values, color='orange', marker='o', label='Percent Accuracy')
+ax2.set_ylabel('Percent Accuracy (%)')
+ax2.set_ylim(0, 150)
+ax2.legend(loc='upper right')
+
+plt.title('Mean Absolute Error and Percent Accuracy for Each Model')
 plt.show()
