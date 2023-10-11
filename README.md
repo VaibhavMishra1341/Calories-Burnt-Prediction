@@ -28,6 +28,7 @@ The dataset encompasses exercise and user data, encompassing critical attributes
 
 ![Merging Datasets](https://github.com/gaytrisran03/Calorie-Prediction/assets/78645392/9c1dca40-5d01-4493-a952-134422dc4b3b)
 
+
 ## Exploratory Data Analysis
 
 We delved into a visual exploration of the dataset, utilizing various plots to discern data distribution, correlations, and trends. Key plots encompassed:
@@ -63,10 +64,6 @@ We employed various regression models including the Decision Tree Regressor, Ran
 Model performance was assessed using the Mean Absolute Error (MAE) as a crucial evaluation metric. Visual representations of the MAE for each model were included to provide insights into their respective performances. Accuracy is also calculated in order to get an all-around perspective of the model performance.
 
 ![Screenshot_80](https://github.com/VaibhavMishra1341/Calories-Burnt-Prediction/assets/39896268/a03ee447-a141-415f-8900-a0ae22babb56)
-
-![Decision Tree MAE](https://github.com/gaytrisran03/Calorie-Prediction/assets/78645392/4b2e51c1-3504-4918-b1fd-c7ad9274f34e)
-
-![Random Forest MAE](https://github.com/gaytrisran03/Calorie-Prediction/assets/78645392/d18b6b65-eae7-4b8a-b983-b303cf4a2137)
 
 ![Screenshot_79](https://github.com/VaibhavMishra1341/Calories-Burnt-Prediction/assets/39896268/230160cf-5af2-4142-bdf3-88aace04efc6)
 
